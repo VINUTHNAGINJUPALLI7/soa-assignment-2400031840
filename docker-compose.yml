@@ -1,0 +1,21 @@
+
+services:
+  backend:
+    image: vinuthnaginjupalli7/docker-backend-2400031840:latest
+    container_name: vaccination-backend
+    ports:
+      - "9081:9081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/vaccinationdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    image: vinuthnaginjupalli7/docker-frontend-2400031840:latest
+    container_name: vaccination-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
